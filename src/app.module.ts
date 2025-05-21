@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
+import { config } from 'dotenv';
 import * as admin from 'firebase-admin';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+
+config();
 
 @Module({
   imports: [],

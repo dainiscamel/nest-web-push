@@ -7,14 +7,13 @@ import {
   TopicNotificationDto,
 } from './dto/notification.dto';
 
-// endpoint
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Post('send-notification')
-  @ApiOperation({ summary: 'Send a push notification to a single device' })
-  @ApiResponse({ status: 200, description: 'Notification sent successfully' })
+  @ApiOperation({ summary: '단일 디바이스에 푸시 알림 전송' })
+  @ApiResponse({ status: 200, description: '알림 전송 성공' })
   async sendNotification(
     @Body() body: { token: string; title: string; body: string; icon: string },
   ) {
@@ -27,8 +26,8 @@ export class AppController {
   }
 
   @Post('send-multiple-notifications')
-  @ApiOperation({ summary: 'Send push notifications to multiple devices' })
-  @ApiResponse({ status: 200, description: 'Notifications sent successfully' })
+  @ApiOperation({ summary: '여러 디바이스에 푸시 알림 전송' })
+  @ApiResponse({ status: 200, description: '알림 전송 성공' })
   async sendMultipleNotifications(@Body() body: MultipleDeviceNotificationDto) {
     return this.appService.sendNotificationToMultipleTokens({
       tokens: body.tokens,
@@ -39,10 +38,10 @@ export class AppController {
   }
 
   @Post('send-topic-notification')
-  @ApiOperation({ summary: 'Send a push notification to a topic' })
+  @ApiOperation({ summary: '토픽 구독자에게 푸시 알림 전송' })
   @ApiResponse({
     status: 200,
-    description: 'Topic notification sent successfully',
+    description: '토픽 알림 전송 성공',
   })
   async sendTopicNotification(@Body() body: TopicNotificationDto) {
     return this.appService.sendTopicNotification({
