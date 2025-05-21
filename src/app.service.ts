@@ -38,17 +38,26 @@ export class AppService {
       notification: {
         title,
         body,
-        icon,
+      },
+      webpush: {
+        notification: {
+          icon,
+        },
       },
       tokens,
     };
 
     try {
       const response = await admin.messaging().sendEachForMulticast(message);
-      console.log('Successfully sent messages:', response);
+      response.responses.forEach((res, idx) => {
+        if (!res.success) {
+          console.error(`Failed to send to token[${idx}]:`, res.error);
+        }
+      });
       return {
         success: true,
         message: `Successfully sent ${response.successCount} messages; ${response.failureCount} failed.`,
+        responses: response.responses,
       };
     } catch (error) {
       console.log('Error sending messages:', error);
