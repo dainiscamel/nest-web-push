@@ -4,6 +4,7 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import {
   MultipleDeviceNotificationDto,
+  NotificationDto,
   TopicNotificationDto,
 } from './dto/notification.dto';
 
@@ -14,9 +15,7 @@ export class AppController {
   @Post('send-notification')
   @ApiOperation({ summary: '단일 디바이스에 푸시 알림 전송' })
   @ApiResponse({ status: 200, description: '알림 전송 성공' })
-  async sendNotification(
-    @Body() body: { token: string; title: string; body: string; icon: string },
-  ) {
+  async sendNotification(@Body() body: NotificationDto) {
     return this.appService.sendNotification({
       token: body.token,
       title: body.title,
